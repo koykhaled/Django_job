@@ -15,6 +15,11 @@ class Cetegory(models.Model):
         return self.name
 
 
+def imageUpload(instance, file_name):
+    fileName, extension = file_name.split(".")
+    return "jobs/{:s}.{:s}".format(instance.title, extension)
+
+
 class Job(models.Model):
     title = models.CharField(max_length=100)
     # location =
@@ -26,6 +31,7 @@ class Job(models.Model):
     experience = models.IntegerField(default=1)
     cetegory = models.ForeignKey(
         Cetegory, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=imageUpload, null=True)
 
     def __str__(self):
         return self.title
